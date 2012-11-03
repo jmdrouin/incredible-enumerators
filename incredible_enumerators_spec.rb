@@ -19,4 +19,19 @@ describe IncredibleEnumerator do
       has_been_called.should == true
     end
   end
+
+  describe "#through" do
+    it "modifies each element of the enumeration using the filter" do
+      has_been_called = false
+
+      enum = (0...5).each.through do |x|
+        has_been_called = true
+        x+1
+      end
+
+      has_been_called.should == false
+      enum.to_a.should == [1,2,3,4,5]
+      has_been_called.should == true
+    end
+  end
 end

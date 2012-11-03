@@ -13,6 +13,17 @@ module IncredibleEnumerator
       end
     end
   end
+
+  # Lazy enumerator modifier. Returns an enumerator, similar to self,
+  # but that will enumerate values modified  by the given block.
+  # Example: (1..4).each.through{|x|x+1}.to_a == [2,3,4,5]
+  def through(&filter)
+    Enumerator.new do |yielder|
+      each do |x|
+        yielder.yield(filter.call(x))
+      end
+    end
+  end
 end
 
 class Enumerator
