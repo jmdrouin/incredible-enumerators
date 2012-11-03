@@ -1,6 +1,6 @@
 # (c) 2012 Jerome Morin-Drouin | jmdrouin@gmail.com
 
-module IncredibleEnumerator
+module Enumerable
 
   # Lazy filter. Returns an enumerator, similar to self, but
   # that will only enumerate the values fulfilling the given
@@ -24,8 +24,4 @@ module IncredibleEnumerator
       end
     end
   end
-end
-
-class Enumerator
-  include IncredibleEnumerator
 end
