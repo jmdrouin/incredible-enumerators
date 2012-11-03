@@ -24,4 +24,12 @@ module Enumerable
       end
     end
   end
+
+  # Return an enumerator, which is just the sequence of two enumerators
+  def + that
+    Enumerator.new do |yielder|
+      each {|x| yielder << x}
+      that.each {|x| yielder << x}
+    end
+  end
 end

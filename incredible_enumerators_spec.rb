@@ -35,4 +35,12 @@ describe "IncredibleEnumerator" do
     end
   end
 
+  describe "+" do
+    it "will iterate on all the added enumerators" do
+      enum = (0..2) + ["a", "b"]
+      enum.to_a.should == [0,1,2,"a","b"]
+    end
+  end
+
+
 end
