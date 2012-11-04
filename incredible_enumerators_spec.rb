@@ -52,6 +52,18 @@ describe "IncredibleEnumerator" do
       enum = (0..1) * [:a, :b]
       enum.to_a.should == [[0,:a], [0,:b], [1,:a], [1,:b]]
     end
+
+    it "can handle enumerators over Arrays" do
+      enum = [[1,2],[1,3]].product([:a, :b])
+      enum.first.should == [[1,2],:a]
+    end
+  end
+
+  describe "flat_product" do
+    it "behaves like product, but flattens the elements" do
+      enum = [[1,2]].flat_product([:a,:b])
+      enum.to_a.should == [[1,2,:a], [1,2,:b]]
+    end
   end
 
   describe "enumerator * n" do
@@ -75,7 +87,7 @@ describe "IncredibleEnumerator" do
     it "should enumerate all the repeated permutations, for n > 1" do
       enum = (0..2).each.repeated_permutations(2)
       expectation = (0..2).to_a.repeated_permutations(2).to_a
-      (enum.to_a - expectation).size.should == 0
+      enum.to_a.should == expectation
     end
   end
 end

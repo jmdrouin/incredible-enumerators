@@ -44,6 +44,15 @@ module Enumerable
     end
   end
 
+  # Product of two enumerators, flattening any enumerated element
+  def flat_product(that)
+    Enumerator.new do |yielder|
+      each do |x|
+        that.each {|y| yielder << [*x,*y]}
+      end
+    end
+  end
+
   # Same as #product when an Enumerable is given,
   # same as #cycle when an Integer is given
   def * that
@@ -65,7 +74,7 @@ module Enumerable
     elsif n==1
       through{|x| [x] }
     else
-      (each * repeated_permutations(n-1)).through(&:flatten)
+      flat_product(repeated_permutations(n-1))
     end
   end
 end
