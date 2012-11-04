@@ -101,4 +101,11 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [13,14,15]
     end
   end
+
+  describe "by" do
+    it "should iterate on groups of n consecutive elements" do
+      enum = [1,2,3,4,5].each.by(3)
+      enum.to_a.should == [[1,2,3],[2,3,4],[3,4,5]]
+    end
+  end
 end

@@ -88,4 +88,19 @@ module Enumerable
       end
     end
   end
+
+  # Enumerates by groups of n consecutive elements.
+  # Example: (1..10).by(3).to_a == [[1,2,3], [2,3,4], [3,4,5], ...
+  def by(n)
+    Enumerator.new do |yielder|
+      last_elements = each.take(n)
+      skip(n).each do |x|
+        yielder.yield(*last_elements)
+        last_elements << x
+        last_elements.shift
+      end
+      yielder << last_elements
+    end
+  end
+
 end
