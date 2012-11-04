@@ -77,4 +77,7 @@ module Enumerable
       flat_product(repeated_permutation(n-1))
     end
   end
+
+  alias_method :**, :repeated_permutation
+
 end

@@ -88,5 +88,10 @@ describe "IncredibleEnumerator" do
       enum = (0..2).each.repeated_permutation(2)
       enum.to_a.should == [0,1,2].repeated_permutation(2).to_a
     end
+
+    it "works with the ** operator" do
+      enum = (0..1)**3
+      enum.to_a.should == [0,1].repeated_permutation(3).to_a
+    end
   end
 end
