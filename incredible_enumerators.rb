@@ -26,12 +26,13 @@ module Enumerable
   end
 
   # Return an enumerator, which is just the sequence of two enumerators
-  def + that
+  def concat that
     Enumerator.new do |yielder|
       each {|x| yielder << x}
       that.each {|x| yielder << x}
     end
   end
+  alias_method :+, :concat
 
   # Product of two enumerators: enumerates all the combinations of one
   # element of both enumerators

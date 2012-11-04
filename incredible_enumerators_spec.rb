@@ -35,8 +35,13 @@ describe "IncredibleEnumerator" do
     end
   end
 
-  describe "+" do
-    it "will iterate on all the added enumerators" do
+  describe "#concat" do
+    it "will iterate on all the concatenated enumerators" do
+      enum = (0..2).concat ["a", "b"]
+      enum.to_a.should == [0,1,2,"a","b"]
+    end
+
+    it "also works with +" do
       enum = (0..2) + ["a", "b"]
       enum.to_a.should == [0,1,2,"a","b"]
     end
