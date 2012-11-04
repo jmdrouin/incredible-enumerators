@@ -1,6 +1,6 @@
 # (c) 2012 Jerome Morin-Drouin | jmdrouin@gmail.com
 
-require "./incredible_enumerators.rb"
+require "./lib/incredible_enumerators.rb"
 
 describe "IncredibleEnumerator" do
   describe "#where" do
