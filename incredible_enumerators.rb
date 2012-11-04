@@ -94,12 +94,9 @@ module Enumerable
   # Instead of yielding enumerable elements (containers), enumerate
   # on them. Similar to Array#flatten.
   # Example: [1,[2,3]].each.flatten.max == 3
-  # If a block is provided, it filters the elements before flattening.
-  def flatten(level=-1, &block)
-    if block
-      through(&block).flatten(level)
-    elsif level==0
-      each
+  def flatten(level=-1)
+    case level
+    when 0 then each
     else
       Enumerator.new do |yielder|
         each do |x|
@@ -115,5 +112,10 @@ module Enumerable
     end
   end
 
-  alias_method :gather, :flatten
+  # Prepares a new enumerator on all the elements returned by
+  # calls to the given block. Example:
+  # [1,2,3].gather(&:times).to_a == [0,0,1,0,1,2]
+  def gather(&block)
+    through(&block).flatten(1)
+  end
 end
