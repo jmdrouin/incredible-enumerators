@@ -136,6 +136,9 @@ describe "IncredibleEnumerator" do
       array.each.flatten.to_a.should == array.flatten
     end
 
-
+    it "collects all the elements provided, if a block is given" do
+      enum = (-3..3).flatten {|n| 1..n}
+      enum.to_a.should == [1,1,2,1,2,3]
+    end
   end
 end

@@ -116,8 +116,11 @@ module Enumerable
   # Instead of yielding enumerable elements (containers), enumerate
   # on them. Similar to Array#flatten.
   # Example: [1,[2,3]].each.flatten.max == 3
-  def flatten(level=-1)
-    if level==0
+  # If a block is provided, it filters the elements before flattening.
+  def flatten(level=-1, &block)
+    if block
+      through(&block).flatten(level)
+    elsif level==0
       each
     else
       Enumerator.new do |yielder|
@@ -134,4 +137,5 @@ module Enumerable
     end
   end
 
+  alias_method :gather, :flatten
 end
