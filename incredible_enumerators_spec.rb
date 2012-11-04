@@ -42,10 +42,23 @@ describe "IncredibleEnumerator" do
     end
   end
 
-  describe "*" do
+  describe "product" do
     it "will iterate over all combinations" do
+      enum = (0..1).product([:a, :b])
+      enum.to_a.should == [[0,:a], [0,:b], [1,:a], [1,:b]]
+    end
+
+    it "works with the * operator" do
       enum = (0..1) * [:a, :b]
       enum.to_a.should == [[0,:a], [0,:b], [1,:a], [1,:b]]
     end
   end
+
+  describe "enumerator * n" do
+    it "should enumerate n times" do
+      enum = (0..1) * 2
+      enum.to_a.should == [0,1,0,1]
+    end
+  end
+
 end

@@ -35,12 +35,26 @@ module Enumerable
 
   # Product of two enumerators: enumerates all the combinations of one
   # element of both enumerators
-  # Example: ( (0..1) * (8..9) ).to_a == [[0,8],[0,9],[1,8],[1,9]]
-  def * that
+  # Example: (0..1).product(8..9).to_a == [[0,8],[0,9],[1,8],[1,9]]
+  def product(that)
     Enumerator.new do |yielder|
       each do |x|
         that.each {|y| yielder << [x,y]}
       end
+    end
+  end
+
+  # Same as #product when an Enumerable is given,
+  # same as #cycle when an Integer is given
+  def * that
+    if that.is_a? Enumerable
+      Enumerator.new do |yielder|
+        each do |x|
+          that.each {|y| yielder << [x,y]}
+        end
+      end
+    elsif that.is_a? Integer
+      cycle(that)
     end
   end
 
