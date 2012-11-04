@@ -32,4 +32,16 @@ module Enumerable
       that.each {|x| yielder << x}
     end
   end
+
+  # Product of two enumerators: enumerates all the combinations of one
+  # element of both enumerators
+  # Example: ( (0..1) * (8..9) ).to_a == [[0,8],[0,9],[1,8],[1,9]]
+  def * that
+    Enumerator.new do |yielder|
+      each do |x|
+        that.each {|y| yielder << [x,y]}
+      end
+    end
+  end
+
 end

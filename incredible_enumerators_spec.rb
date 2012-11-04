@@ -42,5 +42,10 @@ describe "IncredibleEnumerator" do
     end
   end
 
-
+  describe "*" do
+    it "will iterate over all combinations" do
+      enum = (0..1) * [:a, :b]
+      enum.to_a.should == [[0,:a], [0,:b], [1,:a], [1,:b]]
+    end
+  end
 end
