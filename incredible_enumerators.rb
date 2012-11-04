@@ -118,4 +118,18 @@ module Enumerable
   def gather(&block)
     through(&block).flatten(1)
   end
+
+  # Prevents enumerating the same element twice. Similar to
+  # Array#uniq.
+  def uniq
+    Enumerator.new do |yielder|
+      visited_elements = []
+      each do |element|
+        unless visited_elements.include? element
+          visited_elements << element
+          yielder << element
+        end
+      end
+    end
+  end
 end

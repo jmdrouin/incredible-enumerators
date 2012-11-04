@@ -141,4 +141,11 @@ describe "IncredibleEnumerator" do
       enum.first.should == [1,1]
     end
   end
+
+  describe "uniq" do
+    it "should never enumerate twice the same element" do
+      enum = [0,0,1,0,0,1,2].each.uniq
+      enum.to_a.should == [0,1,2]
+    end
+  end
 end
