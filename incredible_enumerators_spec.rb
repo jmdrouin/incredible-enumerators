@@ -102,13 +102,6 @@ describe "IncredibleEnumerator" do
     end
   end
 
-  describe "by" do
-    it "should iterate on groups of n consecutive elements" do
-      enum = [1,2,3,4,5].each.by(3)
-      enum.to_a.should == [[1,2,3],[2,3,4],[3,4,5]]
-    end
-  end
-
   describe "where_index" do
     it "should only iterate on indices that fulfill the predicate" do
       enum = [:zero, :one, :two, :three, :four].where_index(&:even?)
