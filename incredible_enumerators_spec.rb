@@ -61,4 +61,21 @@ describe "IncredibleEnumerator" do
     end
   end
 
+  describe "repeated_permutation" do
+    it "should enumerate only an empty array, for n=0" do
+      enum = (0..2).each.repeated_permutations(0)
+      enum.to_a.should == [[]]
+    end
+
+    it "should enumerate arrays of size 1, for n=1" do
+      enum = (0..2).each.repeated_permutations(1)
+      enum.to_a.should == [[0],[1],[2]]
+    end
+
+    it "should enumerate all the repeated permutations, for n > 1" do
+      enum = (0..2).each.repeated_permutations(2)
+      expectation = (0..2).to_a.repeated_permutations(2).to_a
+      (enum.to_a - expectation).size.should == 0
+    end
+  end
 end

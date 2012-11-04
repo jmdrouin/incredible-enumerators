@@ -58,4 +58,14 @@ module Enumerable
     end
   end
 
+  # Enumerates all repeated permutations (see Array#repeated_permutations)
+  def repeated_permutations(n)
+    if n==0
+      [[]].each
+    elsif n==1
+      through{|x| [x] }
+    else
+      (each * repeated_permutations(n-1)).through(&:flatten)
+    end
+  end
 end
