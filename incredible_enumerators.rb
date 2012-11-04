@@ -146,12 +146,30 @@ module Enumerable
     else
       Enumerator.new do |yielder|
         each.with_index do |element, index|
-          skip(index+1).combination(n-1).each do |*permutations|
-            yielder.yield(element, *permutations.flatten(1))
+          skip(index+1).combination(n-1).each do |*tail|
+            yielder.yield(element, *tail.flatten(1))
           end
         end
       end
     end
   end
+
+  # All possible permutations of n distinct elements
+  # from the enumerator. Similar to Array#permutation.
+  def permutation(n)
+    case n
+    when 0 then [[]].each
+    when 1 then through{|x| [x]}
+    else
+      Enumerator.new do |yielder|
+        each.with_index do |element, index|
+          where_index{|i| i!=index}.permutation(n-1).each do |*tail|
+            yielder.yield(element, *tail.flatten(1))
+          end
+        end
+      end
+    end
+  end
+
 
 end

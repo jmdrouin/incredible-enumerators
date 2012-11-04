@@ -165,4 +165,15 @@ describe "IncredibleEnumerator" do
       end
     end
   end
+
+  describe "#permutation" do
+    it "behaves like Array#permutation" do
+      array = [1,2,3,4]
+      (0..5).each do |n|
+        enum = array.each.permutation(n)
+        enum.to_a.should == array.permutation(n).to_a
+      end
+    end
+  end
+
 end
