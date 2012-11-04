@@ -148,4 +148,11 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [0,1,2]
     end
   end
+
+  describe "#&" do
+    it "should merge the enumeration, without duplicates" do
+      enum = (3..5) & (1..7)
+      enum.to_a.should == [3,4,5,1,2,6,7]
+    end
+  end
 end

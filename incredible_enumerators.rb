@@ -132,4 +132,9 @@ module Enumerable
       end
     end
   end
+
+  # Merges the enumeration without repetitions. Similar to Array#&
+  def & that
+    (self + that).uniq
+  end
 end
