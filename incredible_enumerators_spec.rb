@@ -155,4 +155,21 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [3,4,5,1,2,6,7]
     end
   end
+
+  describe "#-" do
+    it "should not enumerate elements of the second enumerator" do
+      enum = (1..9) - (5..8)
+      enum.to_a.should == [1,2,3,4,9]
+    end
+  end
+
+  describe "#combination" do
+    it "behaves like Array#combination" do
+      array = [1,2,3,4]
+      (0..5).each do |n|
+        enum = array.each.combination(n)
+        enum.to_a.should == array.combination(n).to_a
+      end
+    end
+  end
 end

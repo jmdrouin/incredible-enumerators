@@ -137,4 +137,27 @@ module Enumerable
   def & that
     (self + that).uniq
   end
+
+  # Skips the elements of the right-hand enumerator. Like Array#-
+  def - that
+    where {|x| !that.include?(x) }
+  end
+
+  # All possible combinations of n distinct elements
+  # from the enumerator. Similar to Array#combination.
+  def combination(n)
+    case n
+    when 0 then [[]].each
+    when 1 then through{|x| [x]}
+    else
+      Enumerator.new do |yielder|
+        each.with_index do |element, index|
+          skip(index+1).combination(n-1).each do |*permutations|
+            yielder.yield(element, *permutations.flatten(1))
+          end
+        end
+      end
+    end
+  end
+
 end
