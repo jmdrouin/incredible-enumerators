@@ -135,18 +135,6 @@ describe "IncredibleEnumerator" do
     end
   end
 
-  describe "gather" do
-    it "collects all the elements provided by the block" do
-      enum = (1..3).gather(&:times)
-      enum.to_a.should == [0, 0,1, 0,1,2]
-    end
-
-    it "should only flatten the first level" do
-      enum = [3,4].gather{|n| (1..n).to_a.repeated_combination(2)}
-      enum.first.should == [1,1]
-    end
-  end
-
   describe "uniq" do
     it "should never enumerate twice the same element" do
       enum = [0,0,1,0,0,1,2].each.uniq

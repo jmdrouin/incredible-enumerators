@@ -113,13 +113,6 @@ module Enumerable
     end
   end
 
-  # Prepares a new enumerator on all the elements returned by
-  # calls to the given block. Example:
-  # [1,2,3].gather(&:times).to_a == [0,0,1,0,1,2]
-  def gather(&block)
-    through(&block).flatten(1)
-  end
-
   # Prevents enumerating the same element twice. Similar to
   # Array#uniq.
   def uniq
