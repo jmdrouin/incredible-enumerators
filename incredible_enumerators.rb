@@ -68,13 +68,13 @@ module Enumerable
   end
 
   # Enumerates all repeated permutations (see Array#repeated_permutations)
-  def repeated_permutations(n)
+  def repeated_permutation(n)
     if n==0
       [[]].each
     elsif n==1
       through{|x| [x] }
     else
-      flat_product(repeated_permutations(n-1))
+      flat_product(repeated_permutation(n-1))
     end
   end
 end
