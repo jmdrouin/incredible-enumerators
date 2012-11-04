@@ -56,28 +56,20 @@ module Enumerable
   # Same as #product when an Enumerable is given,
   # same as #cycle when an Integer is given
   def * that
-    if that.is_a? Enumerable
-      Enumerator.new do |yielder|
-        each do |x|
-          that.each {|y| yielder << [x,y]}
-        end
-      end
-    elsif that.is_a? Integer
-      cycle(that)
+    case that
+    when Enumerable then product(that)
+    when Integer    then cycle(that)
     end
   end
 
   # Enumerates all repeated permutations (see Array#repeated_permutations)
   def repeated_permutation(n)
-    if n==0
-      [[]].each
-    elsif n==1
-      through{|x| [x] }
-    else
-      flat_product(repeated_permutation(n-1))
+    case n
+    when 0 then [[]].each
+    when 1 then through{|x| [x] }
+    else flat_product(repeated_permutation(n-1))
     end
   end
-
   alias_method :**, :repeated_permutation
 
   # Only enumerates element where the index fits the predicate
