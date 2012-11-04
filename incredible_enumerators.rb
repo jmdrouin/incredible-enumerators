@@ -80,13 +80,18 @@ module Enumerable
 
   alias_method :**, :repeated_permutation
 
-  # Skips the n first elements of the enumeration
-  def skip(n)
+  # Only enumerates element where the index fits the predicate
+  def where_index(&predicate)
     Enumerator.new do |yielder|
       each.with_index do |x, i|
-        yielder.yield(x) unless i < n
+        yielder.yield(x) if predicate.call(i)
       end
     end
+  end
+
+  # Skips the n first elements of the enumeration
+  def skip(n)
+    where_index {|i| i >= n}
   end
 
   # Enumerates by groups of n consecutive elements.

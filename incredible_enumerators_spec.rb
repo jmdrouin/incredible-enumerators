@@ -108,4 +108,11 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [[1,2,3],[2,3,4],[3,4,5]]
     end
   end
+
+  describe "where_index" do
+    it "should only iterate on indices that fulfill the predicate" do
+      enum = [:zero, :one, :two, :three, :four].where_index(&:even?)
+      enum.to_a.should == [:zero, :two, :four]
+    end
+  end
 end
