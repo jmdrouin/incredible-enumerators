@@ -176,4 +176,14 @@ describe "IncredibleEnumerator" do
     end
   end
 
+  describe "#repeated_combination" do
+    it "behaves like Array#repeated_combination" do
+      array = [1,2,3,4]
+      (0..5).each do |n|
+        enum = array.each.repeated_combination(n)
+        enum.to_a.should == array.repeated_combination(n).to_a
+      end
+    end
+  end
+
 end

@@ -171,5 +171,21 @@ module Enumerable
     end
   end
 
+  # All possible combinations of n elements with repetitions
+  # from the enumerator. Similar to Array#repeated_combination.
+  def repeated_combination(n)
+    case n
+    when 0 then [[]].each
+    when 1 then through{|x| [x]}
+    else
+      Enumerator.new do |yielder|
+        each.with_index do |element, index|
+          skip(index).repeated_combination(n-1).each do |*tail|
+            yielder.yield(element, *tail.flatten(1))
+          end
+        end
+      end
+    end
+  end
 
 end
