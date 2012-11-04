@@ -186,4 +186,20 @@ describe "IncredibleEnumerator" do
     end
   end
 
+  describe "#structural_map" do
+    it "leaves the structure of arrays intact" do
+      tree = [1,2,[3,4],5]
+      tree.structural_map(&:even?).should == [false,true,[false,true],false]
+    end
+
+    it "works with non-array enumerables" do
+      tree = [1,2,3..5]
+      tree.structural_map(&:even?).should == [false,true,[false,true,false]]
+    end
+
+    it "goes as deep as wanted, by default" do
+      tree = [1,[2,[3]]]
+      tree.structural_map{|x|x*10}.should == [10,[20,[30]]]
+    end
+  end
 end
