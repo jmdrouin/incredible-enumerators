@@ -122,4 +122,20 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [1,1]
     end
   end
+
+  describe "flatten" do
+    it "iterates also on enumerables of the given level" do
+      array = [[1,2],3,[[4]]]
+      (0..3).each do |level|
+        array.each.flatten(level).to_a.should == array.flatten(level)
+      end
+    end
+
+    it "flattens without end if no level is given" do
+      array = [1,[2,[3,[4]]]]
+      array.each.flatten.to_a.should == array.flatten
+    end
+
+
+  end
 end

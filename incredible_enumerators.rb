@@ -112,4 +112,26 @@ module Enumerable
   def compact
     where{|x| !x.nil? }
   end
+
+  # Instead of yielding enumerable elements (containers), enumerate
+  # on them. Similar to Array#flatten.
+  # Example: [1,[2,3]].each.flatten.max == 3
+  def flatten(level=-1)
+    if level==0
+      each
+    else
+      Enumerator.new do |yielder|
+        each do |x|
+          if x.is_a? Enumerable
+            x.flatten(level-1).each do |nested_element|
+              yielder << nested_element
+            end
+          else
+            yielder << x
+          end
+        end
+      end
+    end
+  end
+
 end
