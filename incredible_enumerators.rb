@@ -190,13 +190,13 @@ module Enumerable
 
   # Acts like collect or map, but keeps the internal structure.
   # Example: [1,[2,3]].structural_map{|x|x+1} == [2,[3,4]]
-  def structural_map(&block)
+  def structural_map(level=-1, &block)
     collect do |x|
-      case x
-      when Enumerable then x.structural_map(&block)
-      else block.call(x)
+      if level==0 || !(Enumerable===x)
+        block.call(x)
+      else
+        x.structural_map(level-1, &block)
       end
     end
   end
-
 end

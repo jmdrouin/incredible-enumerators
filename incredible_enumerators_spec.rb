@@ -201,5 +201,15 @@ describe "IncredibleEnumerator" do
       tree = [1,[2,[3]]]
       tree.structural_map{|x|x*10}.should == [10,[20,[30]]]
     end
+
+    it "does not keep structure if the level is 0" do
+      tree = [ nil, [nil, [nil] ] ]
+      tree.structural_map(0,&:nil?).should == [true,false]
+    end
+
+    it "keeps the structure up to the given level" do
+      tree = [ nil, [nil, [nil, [nil] ] ] ]
+      tree.structural_map(2,&:nil?).should == [true,[true,[true,false]]]
+    end
   end
 end
