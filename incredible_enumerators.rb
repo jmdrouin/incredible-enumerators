@@ -80,4 +80,12 @@ module Enumerable
 
   alias_method :**, :repeated_permutation
 
+  # Skips the n first elements of the enumeration
+  def skip(n)
+    Enumerator.new do |yielder|
+      each.with_index do |x, i|
+        yielder.yield(x) unless i < n
+      end
+    end
+  end
 end

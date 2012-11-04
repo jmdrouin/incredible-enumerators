@@ -94,4 +94,11 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [0,1].repeated_permutation(3).to_a
     end
   end
+
+  describe "skip" do
+    it "should skip the n first elements of the enumeration" do
+      enum = (10..15).skip(3)
+      enum.to_a.should == [13,14,15]
+    end
+  end
 end
