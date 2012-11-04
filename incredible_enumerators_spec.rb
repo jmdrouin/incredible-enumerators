@@ -115,4 +115,11 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [:zero, :two, :four]
     end
   end
+
+  describe "compact" do
+    it "iterates only on non-nil objects" do
+      enum = [1, nil, 1, nil].each.compact
+      enum.to_a.should == [1,1]
+    end
+  end
 end

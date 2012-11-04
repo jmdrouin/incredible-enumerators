@@ -108,4 +108,8 @@ module Enumerable
     end
   end
 
+  # Skips enumeration of nil elements (similar to Array#compact)
+  def compact
+    where{|x| !x.nil? }
+  end
 end
