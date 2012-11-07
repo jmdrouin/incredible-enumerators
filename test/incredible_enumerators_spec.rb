@@ -47,6 +47,18 @@ describe "IncredibleEnumerator" do
     end
   end
 
+  describe "injector" do
+    it "prepares an inject-like enumeration" do
+      enum = (0..5).injector(0)
+      enum.each{|memo, x| memo + x}.should == 1+2+3+4+5
+    end
+
+    it "has nil as default value" do
+      enum = [1,2].injector
+      enum.each{|memo,x| [memo] + [x]}.should == [[nil,1],2]
+    end
+  end
+
   describe "product" do
     it "will iterate over all combinations" do
       enum = (0..1).product([:a, :b])

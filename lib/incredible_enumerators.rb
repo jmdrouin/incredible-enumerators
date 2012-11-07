@@ -25,6 +25,18 @@ module Enumerable
     end
   end
 
+  # Returns an enumerator whose #each method acts
+  # like a normal inject/reduce
+  def injector(memo=nil)
+    Enumerator.new do |yielder|
+      each do |x|
+        memo = yielder.yield(memo, x)
+      end
+      memo
+    end
+  end
+  alias_method :reducer, :injector
+
   # Return an enumerator, which is just the sequence of two enumerators
   def concat that
     Enumerator.new do |yielder|
