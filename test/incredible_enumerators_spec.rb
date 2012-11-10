@@ -124,6 +124,11 @@ describe "IncredibleEnumerator" do
       enum = (10..15).each.skip(3)
       enum.to_a.should == [13,14,15]
     end
+
+    it "iterates immediatly if a block is given" do
+      enum = (0..5).each.skip(3)
+      enum.inject(&:+).should == 3+4+5
+    end
   end
 
   describe "where_index" do

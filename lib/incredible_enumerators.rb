@@ -57,8 +57,8 @@ module LazyEnumerator
   end
 
   # Skips the n first elements of the enumeration
-  def skip(n)
-    where_index {|i| i >= n}
+  def skip(n, &block)
+    where_index{|i| i >= n}.each(&block)
   end
 end
 
@@ -103,12 +103,14 @@ module ArrayLikeEnumerator
   end
 
   # Enumerates all repeated permutations (see Array#repeated_permutations)
-  def repeated_permutation(n)
-    case n
+  def repeated_permutation(n, &block)
+    enum = case n
     when 0 then [[]].each
     when 1 then each.through{|x| [x] }
     else flat_product(repeated_permutation(n-1))
     end
+
+    block ? enum.each(&block) : enum
   end
   alias_method :**, :repeated_permutation
 
@@ -164,8 +166,8 @@ module ArrayLikeEnumerator
 
   # All possible combinations of n distinct elements
   # from the enumerator. Similar to Array#combination.
-  def combination(n)
-    case n
+  def combination(n, &block)
+    enum = case n
     when 0 then [[]].each
     when 1 then through{|x| [x]}
     else
@@ -177,12 +179,14 @@ module ArrayLikeEnumerator
         end
       end
     end
+
+    block ? enum.each(&block) : enum
   end
 
   # All possible permutations of n distinct elements
   # from the enumerator. Similar to Array#permutation.
-  def permutation(n)
-    case n
+  def permutation(n, &block)
+    enum = case n
     when 0 then [[]].each
     when 1 then through{|x| [x]}
     else
@@ -194,12 +198,14 @@ module ArrayLikeEnumerator
         end
       end
     end
+
+    block ? enum.each(&block) : enum
   end
 
   # All possible combinations of n elements with repetitions
   # from the enumerator. Similar to Array#repeated_combination.
-  def repeated_combination(n)
-    case n
+  def repeated_combination(n, &block)
+    enum = case n
     when 0 then [[]].each
     when 1 then through{|x| [x]}
     else
@@ -211,6 +217,8 @@ module ArrayLikeEnumerator
         end
       end
     end
+
+    block ? enum.each(&block) : enum
   end
 end
 
