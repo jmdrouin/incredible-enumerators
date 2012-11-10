@@ -1,6 +1,6 @@
 # (c) 2012 Jerome Morin-Drouin | jmdrouin@gmail.com
 
-module Enumerable
+module IncredibleEnumerator
 
   # Lazy filter. Returns an enumerator, similar to self, but
   # that will only enumerate the values fulfilling the given
@@ -89,7 +89,7 @@ module Enumerable
   def repeated_permutation(n)
     case n
     when 0 then [[]].each
-    when 1 then through{|x| [x] }
+    when 1 then each.through{|x| [x] }
     else flat_product(repeated_permutation(n-1))
     end
   end
@@ -156,7 +156,7 @@ module Enumerable
 
   # Skips the elements of the right-hand enumerator. Like Array#-
   def - that
-    where {|x| !that.include?(x) }
+    each.where {|x| !that.include?(x) }
   end
 
   # All possible combinations of n distinct elements
@@ -209,7 +209,13 @@ module Enumerable
       end
     end
   end
+end
 
+class Enumerator
+  include IncredibleEnumerator
+end
+
+module Enumerable
   # Acts like collect or map, but keeps the internal structure.
   # Example: [1,[2,3]].structural_map{|x|x+1} == [2,[3,4]]
   def structural_map(level=-1, &block)
