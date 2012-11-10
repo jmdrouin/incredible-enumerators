@@ -25,6 +25,16 @@ module Enumerable
     end
   end
 
+  # Will add an object to the yielded ones, obtained using the
+  # given proc. Example: [1,2].each.with(&:to_s).to_a == [[1,"1"],[2,"2"]]
+  def with(&additional_object)
+    Enumerator.new do |yielder|
+      each do |x|
+        yielder.yield(x,additional_object.call(x))
+      end
+    end
+  end
+
   # Returns an enumerator whose #each method acts
   # like a normal inject/reduce
   def injector(memo=nil)

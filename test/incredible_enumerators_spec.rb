@@ -20,6 +20,14 @@ describe "IncredibleEnumerator" do
     end
   end
 
+  describe "#with" do
+    it "adds another object to the yielded ones" do
+      enum = (0..4).with{|n| n % 3}
+      enum.to_a.should == [[0,0],[1,1],[2,2],[3,0],[4,1]]
+    end
+  end
+
+
   describe "#through" do
     it "modifies each element of the enumeration using the filter" do
       has_been_called = false
