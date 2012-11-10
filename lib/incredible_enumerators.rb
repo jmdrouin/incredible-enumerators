@@ -64,9 +64,9 @@ module LazyEnumerator
   # Iterates over self and that by alternance. When any of the
   # enumerators is exhausted, the iteration continues for the
   # remaining one.
-  def zigzag(that)
+  def zigzag(*that)
     Enumerator.new do |yielder|
-      enumerators = [each, that]
+      enumerators = [each, *that]
       until enumerators.empty?
         enumerators.each do |enum|
           begin

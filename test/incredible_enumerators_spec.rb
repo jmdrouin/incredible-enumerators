@@ -251,5 +251,11 @@ describe "IncredibleEnumerator" do
       enum.to_a.should == [1,:a,2,:b,:c,:d]
     end
 
+    it "can handle more than 2 enumerators" do
+      enum = [1,2,3,4].each.zigzag([1,2,3].each, [1,2].each)
+      enum.to_a.should == [1,1,1,2,2,2,3,3,4]
+    end
+
+
   end
 end
