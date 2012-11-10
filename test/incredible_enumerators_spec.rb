@@ -236,4 +236,20 @@ describe "IncredibleEnumerator" do
       tree.structural_map(2,&:nil?).should == [true,[true,[true,false]]]
     end
   end
+
+  describe "#zigzag" do
+    it "iterates by alternance over the enumerables" do
+      enum = [1,2,3].each.zigzag([:a,:b,:c].each)
+      enum.to_a.should == [1,:a,2,:b,3,:c]
+    end
+
+    it "works with different sizes" do
+      enum = [1,2,3,4].each.zigzag([:a,:b].each)
+      enum.to_a.should == [1,:a,2,:b,3,4]
+
+      enum = [1,2].each.zigzag([:a,:b,:c,:d].each)
+      enum.to_a.should == [1,:a,2,:b,:c,:d]
+    end
+
+  end
 end

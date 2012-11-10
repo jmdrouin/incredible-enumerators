@@ -60,6 +60,24 @@ module LazyEnumerator
   def skip(n, &block)
     where_index{|i| i >= n}.each(&block)
   end
+
+  # Iterates over self and that by alternance. When any of the
+  # enumerators is exhausted, the iteration continues for the
+  # remaining one.
+  def zigzag(that)
+    Enumerator.new do |yielder|
+      enumerators = [each, that]
+      until enumerators.empty?
+        enumerators.each do |enum|
+          begin
+            yielder << enum.next
+          rescue StopIteration
+            enumerators.delete(enum)
+          end
+        end
+      end
+    end
+  end
 end
 
 module ArrayLikeEnumerator
