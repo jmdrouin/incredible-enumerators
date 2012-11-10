@@ -1,6 +1,6 @@
 # (c) 2012 Jerome Morin-Drouin | jmdrouin@gmail.com
 
-module IncredibleEnumerator
+module LazyEnumerator
 
   # Lazy filter. Returns an enumerator, similar to self, but
   # that will only enumerate the values fulfilling the given
@@ -46,6 +46,23 @@ module IncredibleEnumerator
     end
   end
   alias_method :reducer, :injector
+
+  # Only enumerates element where the index fits the predicate
+  def where_index(&predicate)
+    Enumerator.new do |yielder|
+      each.with_index do |x, i|
+        yielder.yield(x) if predicate.call(i)
+      end
+    end
+  end
+
+  # Skips the n first elements of the enumeration
+  def skip(n)
+    where_index {|i| i >= n}
+  end
+end
+
+module ArrayLikeEnumerator
 
   # Return an enumerator, which is just the sequence of two enumerators
   def concat that
@@ -94,20 +111,6 @@ module IncredibleEnumerator
     end
   end
   alias_method :**, :repeated_permutation
-
-  # Only enumerates element where the index fits the predicate
-  def where_index(&predicate)
-    Enumerator.new do |yielder|
-      each.with_index do |x, i|
-        yielder.yield(x) if predicate.call(i)
-      end
-    end
-  end
-
-  # Skips the n first elements of the enumeration
-  def skip(n)
-    where_index {|i| i >= n}
-  end
 
   # Skips enumeration of nil elements (similar to Array#compact)
   def compact
@@ -212,7 +215,8 @@ module IncredibleEnumerator
 end
 
 class Enumerator
-  include IncredibleEnumerator
+  include LazyEnumerator
+  include ArrayLikeEnumerator
 end
 
 module Enumerable
